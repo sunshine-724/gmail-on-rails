@@ -1,15 +1,13 @@
 require 'google/apis/gmail_v1'
 require 'googleauth'
+require 'base64'
 
 class HomeController < ApplicationController
   def index
-
     access_token = session[:user_info]["token"]
     service = Google::Apis::GmailV1::GmailService.new
     service.authorization = access_token
-    
 
-    #get to latest of 10 mails
     result = service.list_user_messages('me', max_results: 10)
     @messages = []
 
@@ -17,9 +15,42 @@ class HomeController < ApplicationController
       message = service.get_user_message('me', msg.id)
       headers = message.payload.headers
       subject = headers.find { |h| h.name == 'Subject' }&.value
-      @messages << subject
+      @messages << { id: msg.id, subject: subject }
     end
   rescue => e
-    @messages = ["エラーが発生しました: #{e.message}"]
+    @messages = [{ subject: "エラーが発生しました: #{e.message}", id: nil }]
   end
+
+  def show
+    access_token = session[:user_info]["token"]
+    service = Google::Apis::GmailV1::GmailService.new
+    service.authorization = access_token
+
+    message = service.get_user_message('me', params[:id])
+    payload = message.payload
+
+    parts = payload.parts || [payload]
+    plain_part = parts.find { |part| part.mime_type == 'text/plain' }
+
+    if plain_part && plain_part.body && plain_part.body.data
+      encoded_body = plain_part.body.data
+
+      # Base64っぽいかどうかを簡易判定（改行や特殊文字がないか）
+      if encoded_body.match?(/\A[a-zA-Z0-9\-_]+=*\z/)
+        decoded_body = Base64.urlsafe_decode64(encoded_body)
+      else
+        decoded_body = encoded_body  # すでにデコード済み
+      end
+    else
+      decoded_body = "本文が見つかりませんでした。"
+    end
+
+    @subject = payload.headers.find { |h| h.name == 'Subject' }&.value
+    @body = decoded_body
+  rescue => e
+    @subject = "エラー"
+    @body = "本文の取得中にエラーが発生しました: #{e.message}"
+  end
+
+
 end

@@ -1,7 +1,12 @@
-
 <h1>最新のメール件名（10件）</h1>
 <ul>
-    <% @messages.each do |subject| %>
-        <li><%= subject %></li>
-    <% end %>
+  <% @messages.each do |msg| %>
+    <li>
+      <% if msg[:id] %>
+        <%= link_to msg[:subject], mail_path(id: msg[:id]) %>
+      <% else %>
+        <%= msg[:subject] %>
+      <% end %>
+    </li>
+  <% end %>
 </ul>
