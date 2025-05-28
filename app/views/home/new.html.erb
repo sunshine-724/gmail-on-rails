@@ -1,24 +1,21 @@
-<h1>メールを送信</h1>
-
-<%= form_with url: send_mail_path, method: :post do %>
+<%= form_with url: send_mail_path, method: :post, local: true do |form| %>
   <div>
-    <%= label_tag :to, "宛先 (To)" %><br>
-    <%= text_field_tag :to %>
+    <%= form.label :to, "宛先" %><br>
+    <%= form.text_field :to, size: 50 %>
   </div>
 
   <div>
-    <%= label_tag :subject, "件名 (Subject)" %><br>
-    <%= text_field_tag :subject %>
+    <%= form.label :subject, "件名" %><br>
+    <%= form.text_field :subject, size: 50 %>
   </div>
 
   <div>
-    <%= label_tag :body, "本文 (Body)" %><br>
-    <%= text_area_tag :body %>
+    <%= form.label :body, "本文" %><br>
+    <%= form.text_area :body, rows: 10, cols: 60, id: "mail_body" %>
   </div>
 
   <div>
-    <%= submit_tag "送信" %>
+    <button type="button" id="add_greeting">アイサツ</button>
+    <%= form.submit "送信" %>
   </div>
 <% end %>
-
-<%= link_to '← 戻る', home_path %>
