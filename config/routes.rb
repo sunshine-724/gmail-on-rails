@@ -13,8 +13,16 @@ Rails.application.routes.draw do
 
   get '/home', to: 'home#index', as: :home
   
+  #write new mail
+  #if reverse to show method, don't nomaly move.
+  get 'mail/new', to: 'home#new', as: 'new_mail'
+  post 'mail/send', to: 'home#send_mail', as: 'send_mail'
+
+
   #show mail text
   get 'mail/:id', to: 'home#show', as: 'mail'
+
+
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

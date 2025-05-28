@@ -15,7 +15,6 @@ class SessionsController < ApplicationController
       token_credential_uri: 'https://oauth2.googleapis.com/token'
 
       }
-
     Rails.logger.info "Session set: #{session[:user_info].inspect}"
 
     redirect_to home_path

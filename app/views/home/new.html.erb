@@ -1,0 +1,24 @@
+<h1>メールを送信</h1>
+
+<%= form_with url: send_mail_path, method: :post do %>
+  <div>
+    <%= label_tag :to, "宛先 (To)" %><br>
+    <%= text_field_tag :to %>
+  </div>
+
+  <div>
+    <%= label_tag :subject, "件名 (Subject)" %><br>
+    <%= text_field_tag :subject %>
+  </div>
+
+  <div>
+    <%= label_tag :body, "本文 (Body)" %><br>
+    <%= text_area_tag :body %>
+  </div>
+
+  <div>
+    <%= submit_tag "送信" %>
+  </div>
+<% end %>
+
+<%= link_to '← 戻る', home_path %>

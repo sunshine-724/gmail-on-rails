@@ -1,9 +1,13 @@
 require 'google/apis/gmail_v1'
 require 'googleauth'
 require 'base64'
+require 'mail'
 
 class HomeController < ApplicationController
   def index
+    if(session[:user_info] == nil)
+      redirect_to root_path
+    end
     access_token = session[:user_info]["token"]
     service = Google::Apis::GmailV1::GmailService.new
     service.authorization = access_token
@@ -52,5 +56,32 @@ class HomeController < ApplicationController
     @body = "本文の取得中にエラーが発生しました: #{e.message}"
   end
 
+
+  def new
+  end
+
+  def send_mail
+    access_token = session[:user_info]["token"]
+    service = Google::Apis::GmailV1::GmailService.new
+    service.authorization = access_token
+
+    #temp body cause can't load inside scope
+    msg1 = params[:body]
+
+    mailst = Mail.new
+    mailst.subject = params[:subject]
+    mailst.to = params[:to]
+    mailst.from = session[:user_info]["email"]
+    # to add your html and plain text content, do this
+    mailst.text_part = Mail::Part.new do
+      content_type 'text/plain; charset=UTF-8'
+      body msg1
+    end
+
+    message_to_send = Google::Apis::GmailV1::Message.new(raw: mailst.to_s)
+    result = service.send_user_message('me', message_to_send)
+
+    logger.debug "response!!!#{result.inspect}"
+  end
 
 end
