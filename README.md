@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
 * Ruby version
+ruby 3.4.3 (2025-04-14 revision d0b7e5b6a0) +PRISM [arm64-darwin24]
 
-* System dependencies
+# Gmail Rails App
 
-* Configuration
+Gmail API を使ってメールの取得・表示・送信ができる Ruby on Rails アプリです。
 
-* Database creation
+## 機能
+- Gmail 認証（OAuth）
+- メール一覧表示
+- メール本文表示
+- メール送信（季節の挨拶付き）
 
-* Database initialization
+## 使用技術
+- Ruby on Rails
+- Gmail API
+- JavaScript（Importmap）
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## セットアップ方法
+1. `bundle install`
+2. `rails db:setup`
+3. Google Cloud Console で OAuth クライアントを作成
+4. `.env` に認証情報を設定
