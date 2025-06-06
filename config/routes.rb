@@ -17,10 +17,10 @@ Rails.application.routes.draw do
   #if reverse to show method, don't nomaly move.
   get 'mail/new', to: 'home#new', as: 'new_mail'
   post 'mail/send', to: 'home#send_mail', as: 'send_mail'
+  
+  # メール詳細
+  get '/mails/:id', to: 'home#show', as: 'show_mail'
 
-
-  #show mail text
-  get 'mail/:id', to: 'home#show', as: 'mail'
 
 
 

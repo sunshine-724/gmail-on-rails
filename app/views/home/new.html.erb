@@ -1,21 +1,31 @@
-<%= form_with url: send_mail_path, method: :post, local: true do |form| %>
-  <div>
-    <%= form.label :to, "宛先" %><br>
-    <%= form.text_field :to, size: 50 %>
-  </div>
+<h1>新規メール作成</h1>
 
-  <div>
-    <%= form.label :subject, "件名" %><br>
-    <%= form.text_field :subject, size: 50 %>
-  </div>
-
-  <div>
-    <%= form.label :body, "本文" %><br>
-    <%= form.text_area :body, rows: 10, cols: 60, id: "mail_body" %>
-  </div>
-
-  <div>
-    <button type="button" id="add_greeting">アイサツ</button>
-    <%= form.submit "送信" %>
-  </div>
+<% if flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
 <% end %>
+
+<%= form_with url: send_mail_path, method: :post do |form| %>
+  <p>
+    <%= form.label :to, "宛先:" %><br>
+    <%= form.text_field :to, size: 50, required: true %>
+  </p>
+  <p>
+    <%= form.label :subject, "件名:" %><br>
+    <%= form.text_field :subject, size: 50 %>
+  </p>
+  <p>
+    <%= form.label :body, "本文 (プレーンテキスト):" %><br>
+    <%= form.text_area :body, rows: 10, cols: 50, id: "plane_mail_body" %>
+    <button type="button" id="add_greeting" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">季節の挨拶を追加</button>
+  </p>
+  <p>
+    <%= form.label :html_body, "本文 (HTML):" %><br>
+    <%= form.text_area :html_body, rows: 10, cols: 50, placeholder: "HTML形式でメールを送信する場合はこちらに入力" %>
+    <small>HTML本文が入力された場合、プレーンテキストより優先されます。</small>
+  </p>
+  <p>
+    <%= form.submit "メール送信" %>
+  </p>
+<% end %>
+
+<p><%= link_to "受信トレイに戻る", home_path %></p>

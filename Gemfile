@@ -67,5 +67,5 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'dotenv-rails'
 gem 'google-apis-gmail_v1'
-gem 'mail'
+gem 'mail', '~> 2.8', '>= 2.8.1'
 

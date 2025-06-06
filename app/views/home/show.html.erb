@@ -1,6 +1,22 @@
+<h1>メール詳細</h1>
 
-<h1><%= @subject %></h1>
-<pre><%= @body %></pre>
-<%= link_to '← 戻る', home_path %>
-<h2> </h2>
-<%= link_to 'ログアウト', root_path %>
+<% if @subject == "エラー" %>
+  <p style="color: red;"><%= @body %></p>
+<% else %>
+  <p><strong>送信元:</strong> <%= @from %></p>
+  <p><strong>件名:</strong> <%= @subject %></p>
+  <p><strong>日付:</strong> <%= @date %></p>
+  <hr>
+  <h3>本文:</h3>
+  <div style="background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd;">
+    <% if @body.html_safe? %>
+      <%= @body %> <%# HTML Safe なので直接出力 %>
+    <% else %>
+      <pre><%= @body %></pre> <%# プレーンテキストの場合は pre タグで整形 %>
+    <% end %>
+  </div>
+<% end %>
+
+<p><%= link_to "受信トレイに戻る", home_path %></p>
+<h2>----------------------------</h2>
+<p><%= link_to "ログアウト", root_path %></p>

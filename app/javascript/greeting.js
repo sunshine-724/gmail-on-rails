@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("add_greeting");
-  const textarea = document.getElementById("mail_body");
-alert("Hello, world!1");
+  const textarea = document.getElementById("plane_mail_body");
+  alert("Hello, world!1");
   if (button && textarea) {
     alert("Hello, world!2");
     button.addEventListener("click", function () {
@@ -18,9 +18,7 @@ alert("Hello, world!1");
       } else {
         greeting = "寒さ厳しき折、くれぐれもご自愛ください。";
       }
-
-      textarea.value += "\n\n" + greeting;
+      textarea.value += (textarea.value ? "\n\n" : "") + greeting;
     });
   }
 });
-
