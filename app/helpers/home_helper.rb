@@ -1,7 +1,10 @@
-# app/helpers/home_helper.rb
+
 
 module HomeHelper
-  # メッセージの本文をデコードするヘルパーメソッド
+    # Rails のサニタイズヘルパーをインクルード
+    include ActionView::Helpers::SanitizeHelper
+
+    # メッセージの本文をデコードするヘルパーメソッド
   def decode_message_body(payload)
     plain_part = find_part_recursively(payload, 'text/plain')
     html_part = find_part_recursively(payload, 'text/html')
@@ -11,7 +14,9 @@ module HomeHelper
     # ぼっち演算子を使った記述例
     if html_part&.body&.data
         decoded_body = decode_part_body(html_part)
-        return decoded_body.html_safe
+        #サニタイズを実施
+        sanitized_html = sanitize(decoded_body)
+        return sanitized_html.html_safe
     elsif plain_part&.body&.data
         decoded_body = decode_part_body(plain_part)
         return decoded_body
@@ -52,4 +57,6 @@ module HomeHelper
       encoded_body.force_encoding('UTF-8')
     end
   end
+
+
 end

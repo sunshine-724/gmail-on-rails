@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("add_greeting");
   const textarea = document.getElementById("plane_mail_body");
-  alert("Hello, world!1");
   if (button && textarea) {
-    alert("Hello, world!2");
     button.addEventListener("click", function () {
       const now = new Date();
       const month = now.getMonth() + 1;
