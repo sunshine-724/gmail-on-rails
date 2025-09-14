@@ -35,3 +35,5 @@
 /config/credentials.yml.enc
 
 /.env
+
+/config/credentials/production.key
