@@ -1,7 +1,7 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :google_oauth2,
-           ENV.fetch("GOOGLE_CLIENT_ID", "dummy_client_id"),
-           ENV.fetch("GOOGLE_CLIENT_SECRET", "dummy_client_secret"),
+           google_client_id: ENV["GOOGLE_CLIENT_ID"] || "dummy_client_id",
+           google_client_secret: ENV["GOOGLE_CLIENT_SECRET"] || "dummy_client_secret",
            {
              scope: 'userinfo.email, userinfo.profile, gmail.readonly, gmail.send',
              access_type: 'offline',
