@@ -460,7 +460,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
-  mail
+  mail (~> 2.8, >= 2.8.1)
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
